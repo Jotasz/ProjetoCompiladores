@@ -14,7 +14,7 @@ SyntacticAnalyzer::~SyntacticAnalyzer(){
 }
 
 /* Funcoes de Leitura */
-string SyntacticAnalyzer::getClass(string line){
+string SyntacticAnalyzer::getToken(string line){
 	unsigned int size = line.length();
 	char *reading = new char[size + 1],
 		*token;
@@ -35,7 +35,7 @@ string SyntacticAnalyzer::getClass(string line){
 	return tok;
 }
 
-string SyntacticAnalyzer::getClass(string line){
+string SyntacticAnalyzer::getLinha(string line){
 	unsigned int size = line.length();
 	char *reading = new char[size + 1],
 		*token;
