@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include "SyntacticAnalyzer.h"
-
+#include <iostream>
 using namespace std;
 
 /* Funcoes de Classe */
@@ -58,24 +58,25 @@ void SyntacticAnalyzer::programa(){
 	
 	string tokenLido, classeLida, linhaLida, linhaBuffer;
 	
-	tokenLido = getToken();
-	linhaLida = getLinha();
+	linhaBuffer = readLine();
+	tokenLido = getToken(linhaBuffer);
+	linhaLida = getLinha(linhaBuffer);
 	if(!tokenLido.compare("program") == 0){
 		cout << "ERRO: " << linhaLida << "O programa precisa iniciar com a palavra-chave program " << endl;
 		return;
 	}
 	
-	linha = readLine();
-	tokenLido  = getToken();
-	classeLida = getClasse(); 
+	linhaBuffer = readLine();
+	tokenLido  = getToken(linhaBuffer);
+	classeLida = getClass(linhaBuffer); 
 
 	if(!classeLida.compare("Identificador") == 0){
 		cout << "ERRO: "<< linhaLida << "Depois da palavra-chave program, deve haver um identificador" << endl;
 		return;
 	}
 
-	linha = readLine();
-	tokenLido = getToken();
+	linhaBuffer = readLine();
+	tokenLido = getToken(linhaBuffer);
 
 	if(!tokenLido.compare(";") == 0){
 		cout << "ERRO: " << linhaLida << "Faltando o ;" << endl;
@@ -91,8 +92,8 @@ void SyntacticAnalyzer::declaracoes_variaveis(){
 	
 	string tokenLido, classeLida, linhaLida, linhaBuffer;
 
-	linhaLida = readLine();
-	tokenLido = getToken();
+	linhaBuffer = readLine();
+	tokenLido = getToken(linhaBuffer);
 
 	if(tokenLido.compare("var") == 0){
 		lista_declaracoes_variaveis();
