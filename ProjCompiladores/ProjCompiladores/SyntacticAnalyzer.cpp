@@ -62,7 +62,7 @@ void SyntacticAnalyzer::programa(){
 	tokenLido = getToken(linhaBuffer);
 	linhaLida = getLinha(linhaBuffer);
 	if(tokenLido.compare("program")){
-		cout << "ERRO: " << linhaLida << "O programa precisa iniciar com a palavra-chave program " << endl;
+		cout << "ERRO: " << linhaLida << "    O programa precisa iniciar com a palavra-chave program " << endl;
 		return;
 	}
 	
@@ -71,7 +71,7 @@ void SyntacticAnalyzer::programa(){
 	classeLida = getClass(linhaBuffer); 
 
 	if(classeLida.compare("Identificador")){
-		cout << "ERRO: "<< linhaLida << "Depois da palavra-chave program, deve haver um identificador" << endl;
+		cout << "ERRO: "<< linhaLida << "     Depois da palavra-chave program, deve haver um identificador" << endl;
 		return;
 	}
 
@@ -79,7 +79,7 @@ void SyntacticAnalyzer::programa(){
 	tokenLido = getToken(linhaBuffer);
 
 	if(tokenLido.compare(";")){
-		cout << "ERRO: " << linhaLida << "Faltando o ;" << endl;
+		cout << "ERRO: " << linhaLida << "    Faltando o ;" << endl;
 		return;
 	}
 
@@ -95,7 +95,7 @@ void SyntacticAnalyzer::declaracoes_variaveis(){
 	linhaBuffer = readLine();
 	tokenLido = getToken(linhaBuffer);
 
-	if(tokenLido.compare("var") == 0){
+	if(!tokenLido.compare("var")){
 		lista_declaracoes_variaveis();
 		return;
 	}
@@ -106,9 +106,41 @@ void SyntacticAnalyzer::lista_declaracoes_variaveis(){
 	lista_de_identificadores();
 
 	linhaBuffer = readLine();
+	linhaLida   = getLinha(linhaBuffer);
+	tokenLido   = getToken(linhaBuffer); 
+	if(tokenLido.compare(":")){
+		cout <<"ERRO: " << linhaLida << "    Necessario ':' após lista de declaracoes de variaveis" << endl;
+		return;
+	}
+
+	linhaBuffer = readLine();
+	linhaLida   = getLinha(linhaBuffer);
+	tokenLido   = getToken(linhaBuffer);
+	classeLida  = getClass(linhaBuffer);
+
+	if(classeLida.compare("Inteiro") && classeLida.compare("Real") && classeLida.compare("Booleano")){
+		cout <<"ERRO: " << linhaLida << "   Necessario tipo após lista de variaveis" << endl;
+		return;
+	}
+
+	linhaBuffer = readLine();
+	linhaLida   = getLinha(linhaBuffer);
+	tokenLido   = getToken(linhaBuffer);
+	classeLida  = getClass(linhaBuffer);
+
+	if(tokenLido.compare(";")){
+		cout <<"ERRO: " << linhaLida << "     Esperado ';' " << endl;
+		return;
+	}
+
+	lista_declaracoes_variaveis_auxiliar();
+
+
 
 }
-void SyntacticAnalyzer::lista_declaracoes_variaveis_auxiliar(){ }
+void SyntacticAnalyzer::lista_declaracoes_variaveis_auxiliar(){
+	
+}
 void SyntacticAnalyzer::lista_de_identificadores(){ }
 void SyntacticAnalyzer::lista_de_identificadores_auxiliar(){ }
 void SyntacticAnalyzer::tipo(){ }
