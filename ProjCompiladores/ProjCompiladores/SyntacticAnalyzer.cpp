@@ -12,6 +12,7 @@ void SyntacticAnalyzer::programa(){
 	linhaLida = getLinha();
 	if(!tokenLido.compare("program") == 0){
 		cout << "ERRO: " << linhaLida << "O programa precisa iniciar com a palavra-chave program " << endl;
+		return;
 	}
 	
 	linha = readLn();
@@ -20,6 +21,7 @@ void SyntacticAnalyzer::programa(){
 
 	if(!classeLida.compare("Identificador") == 0){
 		cout << "ERRO: "<< linhaLida << "Depois da palavra-chave program, deve haver um identificador" << endl;
+		return;
 	}
 
 	linha = readLn();
@@ -27,6 +29,7 @@ void SyntacticAnalyzer::programa(){
 
 	if(!tokenLido.compare(";") == 0){
 		cout << "ERRO: " << linhaLida << "Faltando o ;" << endl;
+		return;
 	}
 
 	declaracoes_variaveis();
@@ -43,6 +46,7 @@ void SyntacticAnalyzer::declaracoes_variaveis(){
 
 	if(tokenLido.compare("var") == 0){
 		lista_declaracoes_variaveis();
+		return;
 	}
 }
 void SyntacticAnalyzer::lista_declaracoes_variaveis(){
