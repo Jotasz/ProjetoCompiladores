@@ -1,6 +1,39 @@
 #include "SyntacticAnalyzer.h"
+#include <iostream>
+#include <string>
 
-void SyntacticAnalyzer::programa(){ }
+using namespace std;
+
+void SyntacticAnalyzer::programa(){
+	
+	string tokenLido, classeLida, linhaLida, linhaBuffer;
+	
+	tokenLido = getToken();
+	linhaLida = getLinha();
+	if(!tokenLido.compare("program") == 0){
+		cout << "ERRO: " << linhaLida << "O programa precisa iniciar com a palavra-chave program " << endl;
+	}
+	
+	linha = readLn();
+	tokenLido  = getToken();
+	classeLida = getClasse(); 
+
+	if(!classeLida.compare("Identificador") == 0){
+		cout << "ERRO: "<< linhaLida << "Depois da palavra-chave program, deve haver um identificador" << endl;
+	}
+
+	linha = readLn();
+	tokenLido = getToken();
+
+	if(!tokenLido.compare(";") == 0){
+		cout << "ERRO: " << linhaLida << "Faltando o ;" << endl;
+	}
+
+	declaracoes_variaveis();
+	declaracoes_de_subprogramas();
+	comando_composto();
+	
+}
 void SyntacticAnalyzer::declaracoes_variaveis(){ }
 void SyntacticAnalyzer::lista_declaracoes_variaveis(){ }
 void SyntacticAnalyzer::lista_declaracoes_variaveis_auxiliar(){ }
@@ -32,4 +65,5 @@ void SyntacticAnalyzer::fator(){ }
 void SyntacticAnalyzer::sinal(){ }
 void SyntacticAnalyzer::op_relacional(){ }
 void SyntacticAnalyzer::op_aditivo(){ }
-void SyntacticAnalyzer::op_multiplicativo(){ }
+
+void SyntacticAnalyzer::op_multiplicativo(){}
