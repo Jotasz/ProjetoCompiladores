@@ -44,7 +44,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				if (reading[i] == ':' && reading[i + 1] == '='){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Comando de Atribuicao");
+					lexToken newTok(counter, word, "Comando_de_Atribuicao");
 					token->push_back(newTok);
 					i += 2;
 				}
@@ -52,21 +52,21 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				else if (reading[i] == '<' && reading[i + 1] == '='){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Operador Relacional");
+					lexToken newTok(counter, word, "Operador_Relacional");
 					token->push_back(newTok);
 					i += 2;
 				}
 				else if (reading[i] == '>' && reading[i + 1] == '='){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Operador Relacional");
+					lexToken newTok(counter, word, "Operador_Relacional");
 					token->push_back(newTok);
 					i += 2;
 				}
 				else if (reading[i] == '<' && reading[i + 1] == '>'){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Operador Relacional");
+					lexToken newTok(counter, word, "Operador_Relacional");
 					token->push_back(newTok);
 					i += 2;
 				}
@@ -74,7 +74,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				else if (reading[i] == 'o' && reading[i + 1] == 'r'){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Operador Aditivo");
+					lexToken newTok(counter, word, "Operador_Aditivo");
 					token->push_back(newTok);
 					i += 2;
 				}
@@ -83,7 +83,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					&& !isLetter(reading[i + 3])){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = reading[i + 2]; tk[3] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Operador Multiplicativo");
+					lexToken newTok(counter, word, "Operador_Multiplicativo");
 					token->push_back(newTok);
 					i += 3;
 				}
@@ -101,7 +101,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				else if (reading[i] == '=' || reading[i] == '<' || reading[i] == '>'){
 					tk[0] = reading[i]; tk[1] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Operador Relacional");
+					lexToken newTok(counter, word, "Operador_Relacional");
 					token->push_back(newTok);
 					i++;
 				}
@@ -109,7 +109,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				else if (reading[i] == '+' || reading[i] == '-'){
 					tk[0] = reading[i]; tk[1] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Operador Aditivo");
+					lexToken newTok(counter, word, "Operador_Aditivo");
 					token->push_back(newTok);
 					i++;
 				}
@@ -117,7 +117,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				else if (reading[i] == '*' || reading[i] == '/'){
 					tk[0] = reading[i]; tk[1] = '\0';
 					string word(tk);
-					lexToken newTok(counter, word, "Operador Multiplicativo");
+					lexToken newTok(counter, word, "Operador_Multiplicativo");
 					token->push_back(newTok);
 					i++;
 				}
@@ -135,7 +135,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					for (j = 0; j < restricted_word->size(); j++){
 						if (!strcmp(tk, restricted_word->at(j).c_str())){
 							string word(tk);
-							lexToken lex(counter, word, "Palavra reservada");
+							lexToken lex(counter, word, "Palavra_Reservada");
 							token->push_back(lex);
 							found = true;
 							break;
@@ -161,13 +161,13 @@ void LexicalAnalyzer::analyze(ifstream *code){
 						}
 						tk[j] = '\0';
 						string word(tk);
-						lexToken lex(counter, word, "Numero real");
+						lexToken lex(counter, word, "Real");
 						token->push_back(lex);
 					}
 					else {
 						tk[j] = '\0';
 						string word(tk);
-						lexToken lex(counter, word, "Numero inteiro");
+						lexToken lex(counter, word, "Inteiro");
 						token->push_back(lex);
 					}
 				}
