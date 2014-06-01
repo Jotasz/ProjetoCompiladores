@@ -1,9 +1,58 @@
-#include "SyntacticAnalyzer.h"
-#include <iostream>
+#include <cstring>
+#include <fstream>
 #include <string>
+#include "SyntacticAnalyzer.h"
 
 using namespace std;
 
+/* Funcoes de Classe */
+SyntacticAnalyzer::SyntacticAnalyzer(string filename){
+	file = new ifstream(filename);
+}
+SyntacticAnalyzer::~SyntacticAnalyzer(){
+	file->close();
+}
+
+/* Funcoes de Leitura */
+string SyntacticAnalyzer::getClass(string line){
+	unsigned int size = line.length();
+	char *reading = new char[size + 1],
+		*token;
+	strcpy(reading, line.c_str());
+	token = strtok(reading, " ");
+	string tok(token);
+	return tok;
+}
+
+string SyntacticAnalyzer::getClass(string line){
+	unsigned int size = line.length();
+	char *reading = new char[size + 1],
+		*token;
+	strcpy(reading, line.c_str());
+	token = strtok(reading, " ");
+	token = strtok(NULL, " ");
+	string tok(token);
+	return tok;
+}
+
+string SyntacticAnalyzer::getClass(string line){
+	unsigned int size = line.length();
+	char *reading = new char[size + 1],
+		*token;
+	strcpy(reading, line.c_str());
+	token = strtok(reading, " ");
+	token = strtok(NULL, " ");
+	token = strtok(NULL, " ");
+	string tok(token);
+	return tok;
+}
+
+string SyntacticAnalyzer::readLine(string line){
+	getline(*file, line);
+	return line;
+}
+
+/* Funcoes de Sintaxe */
 void SyntacticAnalyzer::programa(){
 	
 	string tokenLido, classeLida, linhaLida, linhaBuffer;
@@ -15,7 +64,7 @@ void SyntacticAnalyzer::programa(){
 		return;
 	}
 	
-	linha = readLn();
+	linha = readLine();
 	tokenLido  = getToken();
 	classeLida = getClasse(); 
 
@@ -24,7 +73,7 @@ void SyntacticAnalyzer::programa(){
 		return;
 	}
 
-	linha = readLn();
+	linha = readLine();
 	tokenLido = getToken();
 
 	if(!tokenLido.compare(";") == 0){
@@ -41,7 +90,7 @@ void SyntacticAnalyzer::declaracoes_variaveis(){
 	
 	string tokenLido, classeLida, linhaLida, linhaBuffer;
 
-	linhaLida = readLn();
+	linhaLida = readLine();
 	tokenLido = getToken();
 
 	if(tokenLido.compare("var") == 0){

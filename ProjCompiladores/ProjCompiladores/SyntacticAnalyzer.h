@@ -1,7 +1,18 @@
+#include <fstream>
+
 using namespace std;
 
 class SyntacticAnalyzer {
 public:
+	/* Funcoes de Classe */
+	SyntacticAnalyzer(string filename);
+	~SyntacticAnalyzer();
+	/* Funcoes de Leitura */
+	string getClass(string line);
+	string getToken(string line);
+	string getLinha(string line);
+	string readLine(string line);
+	/* Funcoes de Sintaxe */
 	void programa();
 	void declaracoes_variaveis();
 	void lista_declaracoes_variaveis();
@@ -35,4 +46,6 @@ public:
 	void op_relacional();
 	void op_aditivo();
 	void op_multiplicativo();
+private:
+	ifstream *file;
 };
