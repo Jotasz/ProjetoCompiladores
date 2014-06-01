@@ -34,8 +34,24 @@ void SyntacticAnalyzer::programa(){
 	comando_composto();
 	
 }
-void SyntacticAnalyzer::declaracoes_variaveis(){ }
-void SyntacticAnalyzer::lista_declaracoes_variaveis(){ }
+void SyntacticAnalyzer::declaracoes_variaveis(){
+	
+	string tokenLido, classeLida, linhaLida, linhaBuffer;
+
+	linhaLida = readLn();
+	tokenLido = getToken();
+
+	if(tokenLido.compare("var") == 0){
+		lista_declaracoes_variaveis();
+	}
+}
+void SyntacticAnalyzer::lista_declaracoes_variaveis(){
+	
+	string tokenLido, classeLida, linhaLida, linhaBuffer;
+
+	lista_de_identificadores();
+
+}
 void SyntacticAnalyzer::lista_declaracoes_variaveis_auxiliar(){ }
 void SyntacticAnalyzer::lista_de_identificadores(){ }
 void SyntacticAnalyzer::lista_de_identificadores_auxiliar(){ }
@@ -65,5 +81,4 @@ void SyntacticAnalyzer::fator(){ }
 void SyntacticAnalyzer::sinal(){ }
 void SyntacticAnalyzer::op_relacional(){ }
 void SyntacticAnalyzer::op_aditivo(){ }
-
 void SyntacticAnalyzer::op_multiplicativo(){}
