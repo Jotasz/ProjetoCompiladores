@@ -47,7 +47,8 @@ string SyntacticAnalyzer::getLinha(string line){
 	return tok;
 }
 
-string SyntacticAnalyzer::readLine(string line){
+string SyntacticAnalyzer::readLine(){
+	string line;
 	getline(*file, line);
 	return line;
 }

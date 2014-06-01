@@ -11,7 +11,7 @@ public:
 	string getClass(string line);
 	string getToken(string line);
 	string getLinha(string line);
-	string readLine(string line);
+	string readLine();
 	/* Funcoes de Sintaxe */
 	void programa();
 	void declaracoes_variaveis();
