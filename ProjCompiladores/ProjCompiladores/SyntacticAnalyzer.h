@@ -1,4 +1,4 @@
-#include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -8,44 +8,45 @@ public:
 	SyntacticAnalyzer(string filename);
 	~SyntacticAnalyzer();
 	/* Funcoes de Leitura */
-	string getClass(string line);
-	string getToken(string line);
-	string getLinha(string line);
-	string readLine();
+	string getClass(int index);
+	string getToken(int index);
+	string getLinha(int index);
 	/* Funcoes de Sintaxe */
-	void programa();
-	void declaracoes_variaveis();
-	void lista_declaracoes_variaveis();
-	void lista_declaracoes_variaveis_auxiliar();
-	void lista_de_identificadores();
-	void lista_de_identificadores_auxiliar();
-	void tipo();
-	void declaracoes_de_subprogramas();
-	void declaracoes_de_subprogramas_auxiliar();
-	void declaracao_de_subprograma();
-	void argumentos();
-	void lista_de_parametros();
-	void lista_de_parametros_auxiliar();
-	void comando_composto();
-	void comandos_opcionais();
-	void lista_de_comandos();
-	void lista_de_comandos_auxiliar();
-	void comando();
-	void parte_else();
-	void variavel();
-	void ativacao_de_procedimentos();
-	void lista_de_expressoes();
-	void lista_de_expressoes_auxiliar();
-	void expressao();
-	void expressao_simples();
-	void expressao_simples_auxiliar();
-	void termo();
-	void termo_auxiliar();
-	void fator();
-	void sinal();
-	void op_relacional();
-	void op_aditivo();
-	void op_multiplicativo();
+	int programa(int index);
+	int declaracoes_variaveis(int index);
+	int lista_declaracoes_variaveis(int index);
+	int lista_declaracoes_variaveis_auxiliar(int index);
+	int lista_de_identificadores(int index);
+	int lista_de_identificadores_auxiliar(int index);
+	int tipo(int index);
+	int declaracoes_de_subprogramas(int index);
+	int declaracoes_de_subprogramas_auxiliar(int index);
+	int declaracao_de_subprograma(int index);
+	int argumentos(int index);
+	int lista_de_parametros(int index);
+	int lista_de_parametros_auxiliar(int index);
+	int comando_composto(int index);
+	int comandos_opcionais(int index);
+	int lista_de_comandos(int index);
+	int lista_de_comandos_auxiliar(int index);
+	int comando(int index);
+	int parte_else(int index);
+	int variavel(int index);
+	int ativacao_de_procedimentos(int index);
+	int lista_de_expressoes(int index);
+	int lista_de_expressoes_auxiliar(int index);
+	int expressao(int index);
+	int expressao_simples(int index);
+	int expressao_simples_auxiliar(int index);
+	int termo(int index);
+	int termo_auxiliar(int index);
+	int fator(int index);
+	int sinal(int index);
+	int op_relacional(int index);
+	int op_aditivo(int index);
+	int op_multiplicativo(int index);
 private:
-	ifstream *file;
+	vector<string> *tokens;
+	vector<string> *classes;
+	vector<string> *linhas;
 };
