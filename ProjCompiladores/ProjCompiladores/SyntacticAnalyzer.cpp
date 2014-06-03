@@ -96,8 +96,8 @@ int SyntacticAnalyzer::declaracoes_variaveis(int index){
 }
 int SyntacticAnalyzer::lista_declaracoes_variaveis(int index){
 	
-	string tokenLido, classeLida, linhaLida, linhaBuffer;
-	lista_de_identificadores();
+	string tokenLido, classeLida, linhaLida;
+	index = lista_de_identificadores(index);
 
 	linhaLida   = getLinha(index);
 	tokenLido   = getToken(index); 
@@ -132,10 +132,63 @@ int SyntacticAnalyzer::lista_declaracoes_variaveis(int index){
 
 }
 int SyntacticAnalyzer::lista_declaracoes_variaveis_auxiliar(int index){
-	
+	string tokenLido, classeLida, linhaLida;
+
+	linhaLida   = getLinha(index);
+	tokenLido   = getToken(index);
+	classeLida  = getClass(index);
+	index++;
+
+	if(!classeLida.compare("Inteiro") || !classeLida.compare("Real") || !classeLida.compare("Booleano")){
+		linhaLida   = getLinha(index);
+		tokenLido   = getToken(index);
+		classeLida  = getClass(index);
+		index++;
+		if(!tokenLido.compare(";")){
+			index = lista_declaracoes_variaveis_auxiliar(index);
+			return index;
+		}else {
+			cout <<"ERRO: " << linhaLida << "     Esperado ';' " << endl;
+			return index;
+		}
+	}
 }
-int SyntacticAnalyzer::lista_de_identificadores(int index){ }
-int SyntacticAnalyzer::lista_de_identificadores_auxiliar(int index){ }
+int SyntacticAnalyzer::lista_de_identificadores(int index){
+	string tokenLido, classeLida, linhaLida;
+	
+	tokenLido  = getToken(index);
+	classeLida = getClass(index); 
+	index++;
+
+	if(classeLida.compare("Identificador")){
+		cout << "ERRO: "<< linhaLida << "     Esperado um identificador" << endl;
+		return index;
+	}
+
+	index = lista_de_identificadores_auxiliar(index);
+	return index;
+}
+int SyntacticAnalyzer::lista_de_identificadores_auxiliar(int index){
+	string tokenLido, classeLida, linhaLida;
+	
+	tokenLido  = getToken(index);
+	classeLida = getClass(index); 
+	index++;
+	
+	if(!tokenLido.compare(",")){
+		tokenLido  = getToken(index);
+		classeLida = getClass(index); 
+		index++;
+		if(!classeLida.compare("Identificador")){
+			index = lista_de_identificadores_auxiliar(index);
+			return index;
+		}else{
+			cout << "ERRO: "<< linhaLida << "     Esperado um identificador" << endl;
+			return index;
+		}
+	}
+	return index;
+}
 int SyntacticAnalyzer::tipo(int index){ }
 int SyntacticAnalyzer::declaracoes_de_subprogramas(int index){ }
 int SyntacticAnalyzer::declaracoes_de_subprogramas_auxiliar(int index){ }
