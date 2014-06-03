@@ -52,83 +52,82 @@ int SyntacticAnalyzer::programa(int index){
 	
 	string tokenLido, classeLida, linhaLida, linhaBuffer;
 	
-	linhaBuffer = readLine();
-	tokenLido = getToken(linhaBuffer);
-	linhaLida = getLinha(linhaBuffer);
+	tokenLido = getToken(index);
+	linhaLida = getLinha(index);
+	index++;
 	if(tokenLido.compare("program")){
 		cout << "ERRO: " << linhaLida << "    O programa precisa iniciar com a palavra-chave program " << endl;
-		return;
+		return index;
 	}
 	
-	linhaBuffer = readLine();
-	tokenLido  = getToken(linhaBuffer);
-	classeLida = getClass(linhaBuffer); 
-
+	tokenLido  = getToken(index);
+	classeLida = getClass(index); 
+	index++;
 	if(classeLida.compare("Identificador")){
 		cout << "ERRO: "<< linhaLida << "     Depois da palavra-chave program, deve haver um identificador" << endl;
-		return;
+		return index;
 	}
 
-	linhaBuffer = readLine();
-	tokenLido = getToken(linhaBuffer);
-
+	tokenLido = getToken(index);
+	index++;
 	if(tokenLido.compare(";")){
 		cout << "ERRO: " << linhaLida << "    Faltando o ;" << endl;
-		return;
+		return index;
 	}
 
-	declaracoes_variaveis();
-	declaracoes_de_subprogramas();
-	comando_composto();
+	index = declaracoes_variaveis(index);
+	index = declaracoes_de_subprogramas(index);
+	index = comando_composto(index);
+	return index;
 	
 }
 int SyntacticAnalyzer::declaracoes_variaveis(int index){
 	
 	string tokenLido, classeLida, linhaLida, linhaBuffer;
 
-	linhaBuffer = readLine();
-	tokenLido = getToken(linhaBuffer);
-
+	
+	tokenLido = getToken(index);
+	index++;
 	if(!tokenLido.compare("var")){
-		lista_declaracoes_variaveis();
-		return;
+		index = lista_declaracoes_variaveis(index);
+		return index;
 	}
+	return index;
 }
 int SyntacticAnalyzer::lista_declaracoes_variaveis(int index){
 	
 	string tokenLido, classeLida, linhaLida, linhaBuffer;
 	lista_de_identificadores();
 
-	linhaBuffer = readLine();
-	linhaLida   = getLinha(linhaBuffer);
-	tokenLido   = getToken(linhaBuffer); 
+	linhaLida   = getLinha(index);
+	tokenLido   = getToken(index); 
+	index++;
 	if(tokenLido.compare(":")){
 		cout <<"ERRO: " << linhaLida << "    Necessario ':' após lista de declaracoes de variaveis" << endl;
-		return;
+		return index;
 	}
 
-	linhaBuffer = readLine();
-	linhaLida   = getLinha(linhaBuffer);
-	tokenLido   = getToken(linhaBuffer);
-	classeLida  = getClass(linhaBuffer);
+	linhaLida   = getLinha(index);
+	tokenLido   = getToken(index);
+	classeLida  = getClass(index);
+	index++;
 
 	if(classeLida.compare("Inteiro") && classeLida.compare("Real") && classeLida.compare("Booleano")){
 		cout <<"ERRO: " << linhaLida << "   Necessario tipo após lista de variaveis" << endl;
-		return;
+		return index;
 	}
 
-	linhaBuffer = readLine();
-	linhaLida   = getLinha(linhaBuffer);
-	tokenLido   = getToken(linhaBuffer);
-	classeLida  = getClass(linhaBuffer);
-
+	linhaLida   = getLinha(index);
+	tokenLido   = getToken(index);
+	classeLida  = getClass(index);
+	index++;
 	if(tokenLido.compare(";")){
 		cout <<"ERRO: " << linhaLida << "     Esperado ';' " << endl;
 		return;
 	}
 
-	lista_declaracoes_variaveis_auxiliar();
-
+	index = lista_declaracoes_variaveis_auxiliar(index);
+	return index;
 
 
 }
