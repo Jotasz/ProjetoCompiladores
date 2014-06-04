@@ -81,6 +81,7 @@ int SyntacticAnalyzer::programa(int index){
 	return index;
 	
 }
+
 int SyntacticAnalyzer::declaracoes_variaveis(int index){
 	
 	string tokenLido, classeLida, linhaLida, linhaBuffer;
@@ -94,6 +95,7 @@ int SyntacticAnalyzer::declaracoes_variaveis(int index){
 	}
 	return index;
 }
+
 int SyntacticAnalyzer::lista_declaracoes_variaveis(int index){
 	
 	string tokenLido, classeLida, linhaLida;
@@ -131,6 +133,7 @@ int SyntacticAnalyzer::lista_declaracoes_variaveis(int index){
 
 
 }
+
 int SyntacticAnalyzer::lista_declaracoes_variaveis_auxiliar(int index){
 	string tokenLido, classeLida, linhaLida;
 
@@ -153,6 +156,7 @@ int SyntacticAnalyzer::lista_declaracoes_variaveis_auxiliar(int index){
 		}
 	}
 }
+
 int SyntacticAnalyzer::lista_de_identificadores(int index){
 	string tokenLido, classeLida, linhaLida;
 	
@@ -169,6 +173,7 @@ int SyntacticAnalyzer::lista_de_identificadores(int index){
 	index = lista_de_identificadores_auxiliar(index);
 	return index;
 }
+
 int SyntacticAnalyzer::lista_de_identificadores_auxiliar(int index){
 	string tokenLido, classeLida, linhaLida;
 	
@@ -192,6 +197,7 @@ int SyntacticAnalyzer::lista_de_identificadores_auxiliar(int index){
 	}
 	return index;
 }
+
 int SyntacticAnalyzer::tipo(int index){
 	string tokenLido, classeLida, linhaLida;
 
@@ -208,12 +214,14 @@ int SyntacticAnalyzer::tipo(int index){
 	return index;
 
 }
+
 int SyntacticAnalyzer::declaracoes_de_subprogramas(int index){
 	string tokenLido, classeLida, linhaLida;
 
 	index = declaracoes_de_subprogramas_auxiliar(index);
 	return index;
 }
+
 int SyntacticAnalyzer::declaracoes_de_subprogramas_auxiliar(int index){
 	string tokenLido, classeLida, linhaLida;
 	
@@ -235,6 +243,7 @@ int SyntacticAnalyzer::declaracoes_de_subprogramas_auxiliar(int index){
 	return index;
 	
 }
+
 int SyntacticAnalyzer::declaracao_de_subprograma(int index){
 	string tokenLido, classeLida, linhaLida;
 	linhaLida   = getLinha(index);
@@ -269,6 +278,7 @@ int SyntacticAnalyzer::declaracao_de_subprograma(int index){
 	index = comando_composto(index);
 
 }
+
 int SyntacticAnalyzer::argumentos(int index){
 	string tokenLido, classeLida, linhaLida;
 	linhaLida   = getLinha(index);
@@ -292,6 +302,7 @@ int SyntacticAnalyzer::argumentos(int index){
 	}
 
 }
+
 int SyntacticAnalyzer::lista_de_parametros(int index){
 	string tokenLido, classeLida, linhaLida;
 	index = lista_de_identificadores(index);
@@ -304,6 +315,7 @@ int SyntacticAnalyzer::lista_de_parametros(int index){
 	index = lista_de_parametros_auxiliar(index);
 	return index;
 }
+
 int SyntacticAnalyzer::lista_de_parametros_auxiliar(int index){
 	string tokenLido, classeLida, linhaLida;
 	linhaLida   = getLinha(index);
@@ -328,6 +340,7 @@ int SyntacticAnalyzer::lista_de_parametros_auxiliar(int index){
 		return index;
 	}
 }
+
 int SyntacticAnalyzer::comando_composto(int index){
 	string tokenLido, classeLida, linhaLida;
 	linhaLida   = getLinha(index);
@@ -347,22 +360,46 @@ int SyntacticAnalyzer::comando_composto(int index){
 	}
 	return index;
 }
-int SyntacticAnalyzer::comandos_opcionais(int index){ }
-int SyntacticAnalyzer::lista_de_comandos(int index){ }
-int SyntacticAnalyzer::lista_de_comandos_auxiliar(int index){ }
-int SyntacticAnalyzer::comando(int index){ }
-int SyntacticAnalyzer::parte_else(int index){ }
-int SyntacticAnalyzer::variavel(int index){ }
-int SyntacticAnalyzer::ativacao_de_procedimentos(int index){ }
-int SyntacticAnalyzer::lista_de_expressoes(int index){ }
-int SyntacticAnalyzer::lista_de_expressoes_auxiliar(int index){ }
-int SyntacticAnalyzer::expressao(int index){ }
-int SyntacticAnalyzer::expressao_simples(int index){ }
-int SyntacticAnalyzer::expressao_simples_auxiliar(int index){ }
-int SyntacticAnalyzer::termo(int index){ }
-int SyntacticAnalyzer::termo_auxiliar(int index){ }
 
-int SyntacticAnalyzer::fator(int index){
+int SyntacticAnalyzer::comandos_opcionais(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (classeLida.compare("Identificador") && tokenLido.compare("begin") && tokenLido.compare("if") && tokenLido.compare("while")){
+		/* Significa que é vazio */
+	}
+
+	index = lista_de_comandos(index);
+	return index;
+}
+
+int SyntacticAnalyzer::lista_de_comandos(int index){
+	index = comando(index);
+	index = lista_de_comandos_auxiliar(index);
+	return index;
+}
+int SyntacticAnalyzer::lista_de_comandos_auxiliar(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (tokenLido.compare(";")){
+		/* Significa que é vazio */
+		return index;
+	}
+
+	index++;
+	index = comando(index);
+	index = lista_de_comandos_auxiliar(index);
+	return index;
+}
+
+int SyntacticAnalyzer::comando(int index){
 	string tokenLido, classeLida, linhaLida;
 
 	tokenLido = getToken(index);
@@ -370,8 +407,268 @@ int SyntacticAnalyzer::fator(int index){
 	linhaLida = getLinha(index);
 
 	if (!classeLida.compare("Identificador")){
-		/* Significa que inicia com Identificador */
+		/* Significa que é um identificador */
 		index++;
+
+		tokenLido = getToken(index);
+		classeLida = getClass(index);
+		linhaLida = getLinha(index);
+
+		if (tokenLido.compare(":=")){
+			/* Significa que é ativação de procedimento */
+			index = ativacao_de_procedimentos(index);
+			return index;
+		}
+
+		index++;
+		index = expressao(index);
+		return index;
+	}
+
+	if (!tokenLido.compare("begin")){
+		/* Significa que é comando composto */
+		index = comando_composto(index);
+		return index;
+	}
+
+	if (!tokenLido.compare("if")){
+		index++;
+
+		index = expressao(index);
+
+		tokenLido = getToken(index);
+		classeLida = getClass(index);
+		linhaLida = getLinha(index);
+
+		if (tokenLido.compare("then")){
+			/* Significa que está faltando then */
+			cout << "ERRO: " << linhaLida << " Comando if exige then após expressão" << endl;
+			exit(0);
+		}
+
+		index++;
+		index = comando(index);
+		index = parte_else(index);
+		return index;
+	}
+
+	if (!tokenLido.compare("else")){
+		index++;
+
+		index = expressao(index);
+
+		tokenLido = getToken(index);
+		classeLida = getClass(index);
+		linhaLida = getLinha(index);
+
+		if (tokenLido.compare("do")){
+			/* Significa que está faltando do */
+			cout << "ERRO: " << linhaLida << " Comando while exige do após expressão" << endl;
+			exit(0);
+		}
+
+		index++;
+		index = comando(index);
+		return index;
+	}
+
+	/* Significa que não é um comando */
+	cout << "ERRO: " << linhaLida << " Esperado um comando" << endl;
+	exit(0);
+}
+
+int SyntacticAnalyzer::parte_else(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (tokenLido.compare("else")){
+		/* Significa que é vazio */
+		return index;
+	}
+
+	index++;
+	index = comando(index);
+	return index;
+}
+
+int SyntacticAnalyzer::variavel(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+	index++;
+
+	if (classeLida.compare("Identificador")){
+		/* Significa que NÃO é um identificador */
+		cout << "ERRO: " << linhaLida << " Esperado um identificador" << endl;
+		exit(0);
+	}
+
+	return index;
+}
+
+int SyntacticAnalyzer::ativacao_de_procedimentos(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+	index++;
+
+	if (classeLida.compare("Identificador")){
+		/* Significa que NÃO começou com identificador */
+		cout << "ERRO: " << linhaLida << " Esperado um identificador" << endl;
+		exit(0);
+	}
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (tokenLido.compare("(")){
+		/* Significa que é um identificador isolado */;
+		return index;
+	}
+
+	index++;
+	index = lista_de_expressoes(index);
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+	index++;
+
+	if (tokenLido.compare(")")){
+		/* Significa que NÃO foi fechado */
+		cout << "ERRO: " << linhaLida << " Parêntese aberto e não fechado" << endl;
+		exit(0);
+	}
+
+	return index;
+}
+
+int SyntacticAnalyzer::lista_de_expressoes(int index){
+	index = expressao(index);
+	index = lista_declaracoes_variaveis_auxiliar(index);
+	return index;
+}
+
+int SyntacticAnalyzer::lista_de_expressoes_auxiliar(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (tokenLido.compare(",")){
+		/* Significa que é vazio */
+		return index;
+	}
+
+	index++;
+	index = expressao(index);
+	index = lista_de_expressoes_auxiliar(index);
+	return index;
+}
+
+int SyntacticAnalyzer::expressao(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	index = expressao_simples(index);
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (tokenLido.compare("+") && tokenLido.compare("-") && tokenLido.compare("or")) {
+		/* Significa que é uma expressão simples isolada */
+		return index;
+	}
+
+	index = op_relacional(index);
+	index = expressao_simples(index);
+
+	return index;
+}
+
+int SyntacticAnalyzer::expressao_simples(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (tokenLido.compare("+") && tokenLido.compare("-")){
+		/* Significa que começa com sinal */
+		index = sinal(index);
+	}
+
+	index = termo(index);
+	index = expressao_simples_auxiliar(index);
+	return index;
+
+
+}
+
+int SyntacticAnalyzer::expressao_simples_auxiliar(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (tokenLido.compare("+") && tokenLido.compare("-") && tokenLido.compare("or")) {
+		/* Significa que é vazio */
+		return index;
+	}
+
+	index = op_aditivo(index);
+	index = termo(index);
+	index = expressao_simples_auxiliar(index);
+
+	return index;
+}
+
+int SyntacticAnalyzer::termo(int index){
+	index = fator(index);
+	index = termo_auxiliar(index);
+	return index;
+}
+
+int SyntacticAnalyzer::termo_auxiliar(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+
+	if (tokenLido.compare("*") && tokenLido.compare("/") && tokenLido.compare("and")) {
+		/* Significa que é vazio */
+		return index;
+	}
+
+	/* Significa que não é vazio. Não precisa incrementar já que op_multiplicativo lerá essa mesma linha */
+	index = op_multiplicativo(index);
+	index = fator(index);
+	index = termo_auxiliar(index);
+	return index;
+}
+
+int SyntacticAnalyzer::fator(int index){
+	string tokenLido, classeLida, linhaLida;
+
+	tokenLido = getToken(index);
+	classeLida = getClass(index);
+	linhaLida = getLinha(index);
+	index++;
+
+	if (!classeLida.compare("Identificador")){
+		/* Significa que inicia com Identificador */
+
 		tokenLido = getToken(index);
 		classeLida = getClass(index);
 		linhaLida = getLinha(index);
@@ -379,34 +676,63 @@ int SyntacticAnalyzer::fator(int index){
 		if (!tokenLido.compare("(")){
 			/* Significa que o parêntese foi aberto */
 			index++;
+
 			index = lista_de_expressoes(index);
 
 			tokenLido = getToken(index);
 			classeLida = getClass(index);
 			linhaLida = getLinha(index);
-
-			if (!tokenLido.compare(")")){
-				/* Significa que fechou corretamente */
-				index++;
-				return index + 1;
-			}
-			else {
-				/* Significa que o parêntese não foi fechado */
-				cout << "ERRO: " << linhaLida << "Parêntese aberto e não fechado" << endl;
+			index++;
+			if (tokenLido.compare(")")){
+				/* Significa que NÃO fechou corretamente */
+				cout << "ERRO: " << linhaLida << " Parêntese aberto e não fechado" << endl;
 				exit(0);
 			}
+
+			return index;
 
 		}
 		else {
 			/* Significa que é um identificador isolado */
-			index--;
-			return index + 1;
+			return index;
 		}
 	}
 
-	/* Ainda tem mais coisas */
+	if (!classeLida.compare("Inteiro")){
+		return index;
+	}
 
+	if (!classeLida.compare("Real")){
+		return index;
+	}
 
+	if (!tokenLido.compare("true")){
+		return index;
+	}
+
+	if (!tokenLido.compare("false")){
+		return index;
+	}
+
+	if (!tokenLido.compare("(")){
+		index = expressao(index);
+
+		tokenLido = getToken(index);
+		classeLida = getClass(index);
+		linhaLida = getLinha(index);
+		index++;
+
+		if (tokenLido.compare(")")){
+			/* Significa que NÃO fechou corretamente */
+			cout << "ERRO: " << linhaLida << " Parêntese aberto e não fechado" << endl;
+			exit(0);
+		}
+
+		return index;
+	}
+
+	cout << "ERRO: " << linhaLida << " Esperado um fator" << endl;
+	exit(0);
 }
 
 int SyntacticAnalyzer::sinal(int index){
@@ -415,14 +741,15 @@ int SyntacticAnalyzer::sinal(int index){
 	tokenLido = getToken(index);
 	classeLida = getClass(index);
 	linhaLida = getLinha(index);
+	index++;
 
 	if (tokenLido.compare("+") && tokenLido.compare("-")) {
 		/* Significa que não é sinal */
-		cout << "ERRO: " << linhaLida << "Esperado um sinal + -" << endl;
+		cout << "ERRO: " << linhaLida << " Esperado um sinal + -" << endl;
 		exit(0);
 	}
 
-	return index + 1;
+	return index;
 }
 
 int SyntacticAnalyzer::op_relacional(int index){
@@ -431,15 +758,16 @@ int SyntacticAnalyzer::op_relacional(int index){
 	tokenLido = getToken(index);
 	classeLida = getClass(index);
 	linhaLida = getLinha(index);
+	index++;
 
 	if (tokenLido.compare("=") && tokenLido.compare("<") && tokenLido.compare(">")
 		&& tokenLido.compare("<=") && tokenLido.compare(">=") && tokenLido.compare("<>")) {
 		/* Significa que não é relacional */
-		cout << "ERRO: " << linhaLida << "Esperado um operador relacional = < > <= >= <>" << endl;
+		cout << "ERRO: " << linhaLida << " Esperado um operador relacional = < > <= >= <>" << endl;
 		exit(0);
 	}
 
-	return index + 1;
+	return index;
 }
 
 int SyntacticAnalyzer::op_aditivo(int index){
@@ -448,28 +776,30 @@ int SyntacticAnalyzer::op_aditivo(int index){
 	tokenLido = getToken(index);
 	classeLida = getClass(index);
 	linhaLida = getLinha(index);
+	index++;
 
 	if (tokenLido.compare("+") && tokenLido.compare("-") && tokenLido.compare("or")) {
 		/* Significa que não é aditivo */
-		cout << "ERRO: " << linhaLida << "Esperado um operador aditivo + - or" << endl;
-		return index;
+		cout << "ERRO: " << linhaLida << " Esperado um operador aditivo + - or" << endl;
+		exit(0);
 	}
 
-	return index + 1;
+	return index;
 }
 
 int SyntacticAnalyzer::op_multiplicativo(int index){
 	string tokenLido, classeLida, linhaLida;
-	
+
 	tokenLido = getToken(index);
 	classeLida = getClass(index);
 	linhaLida = getLinha(index);
+	index++;
 
 	if (tokenLido.compare("*") && tokenLido.compare("/") && tokenLido.compare("and")) {
 		/* Significa que não é multiplicativo */
-		cout << "ERRO: " << linhaLida << "Esperado um operador multiplicativo + - and" << endl;
-		return index;
+		cout << "ERRO: " << linhaLida << " Esperado um operador multiplicativo + - and" << endl;
+		exit(0);
 	}
 
-	return index + 1;
+	return index;
 }
