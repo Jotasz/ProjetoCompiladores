@@ -52,9 +52,7 @@ int main(int n_arg, char** args){
 
 	//Análise Semântica
 	SyntacticAnalyzer *sa = new SyntacticAnalyzer("programa.lex");
-	int index = 0;
-	index = sa->programa(index);
-	cout << "Index final : " << index << endl;
+	sa->analyze();
 	delete sa;
 	//Retorno
 	return 0;

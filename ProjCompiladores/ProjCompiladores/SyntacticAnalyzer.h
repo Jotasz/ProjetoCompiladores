@@ -12,6 +12,7 @@ public:
 	string getToken(int index);
 	string getLinha(int index);
 	/* Funcoes de Sintaxe */
+	void analyze();
 	int programa(int index);
 	int declaracoes_variaveis(int index);
 	int lista_declaracoes_variaveis(int index);
