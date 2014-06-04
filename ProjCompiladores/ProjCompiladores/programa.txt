@@ -1,0 +1,16 @@
+program teste;{ este é um programa de teste e está sendo usado para esse fim }
+var
+	i : integer;
+	j : real;
+	X_I4S_ : real;
+begin
+	X_I4S_ = 1234567890.0987654321+0.1;
+	for(i := 0,j := X_I4S-0.1987654321; i < j/2; i := 1+j/3)
+		do
+			j := X_I4S_ / j;
+		if(j <= 0.00000001)
+		then{if_faca}
+			j := 0;
+		else if(j <> 1)
+		then	j := 1;
+end.

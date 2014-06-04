@@ -1,11 +1,11 @@
 #include <fstream>
-#include <vector>
-#include <list>
-#include "LexicalAnalyzer.h"
 #include <iostream>
+#include <list>
+#include <vector>
+#include "LexicalAnalyzer.h"
+#include "SyntaticAnalyzer.h"
 
 using namespace std;
-
 
 int main(int n_arg, char** args){
 	//Variáveis e Ponteiros
@@ -13,7 +13,7 @@ int main(int n_arg, char** args){
 	ofstream *lexc = NULL;
 	//string l_reserv[] = {"program", "var", "integer","real","boolean",
 	//	"procedure","begin","end","if", "then","else","while","do","not"};
-	char input[256] = "TextLex.txt", output[256] = "TextLex.out";
+	char input[256] = "programa.txt", output[256] = "programa.lex";
 	//strcmp(input, args[1]);
 	//strcmp(output, args[1]);
 	//strcat(input, ".txt");
@@ -49,6 +49,12 @@ int main(int n_arg, char** args){
 	delete lex;
 	delete lexc;
 	delete code;
+
+	//Análise Semântica
+	SyntaticAnalyzer *sa = new SynteticAnalyzer("programa.lex");
+	int index = 0;
+	index = programa(index);
+	cout << "Index final : " << index << endl;
 
 	//Retorno
 	return 0;
