@@ -1,5 +1,6 @@
 #include <cstring>
 #include <iostream>
+#include <string>
 #include "LexicalAnalyzer.h"
 
 LexicalAnalyzer::LexicalAnalyzer(){
@@ -27,18 +28,33 @@ LexicalAnalyzer::~LexicalAnalyzer(){
 }
 
 void LexicalAnalyzer::analyze(ifstream *code){
+	string readline;
 	bool commentary = false;
-	char reading[256], tk[256];
 	unsigned int counter = 0;
 	while (!code->eof()){
-		code->getline(reading, 256);
+		getline(*code, readline);
+		unsigned int size = readline.length();
+		char *reading = new char[size + 1],
+			*tk = new char[size + 1];
+		strcpy(reading, readline.c_str());
 		counter++;
-		for (unsigned int i = 0; i < strlen(reading); /*Propositalmente Vazio*/){
+		for (unsigned int i = 0; i < size; /*Propositalmente Vazio*/){
 			/* Comentário */
+			if (reading[i] == '/' && reading[i+1] == '/'){
+				//Comentário de linha, ignorar o resto do processamento
+				break;
+			}
+
 			if (reading[i] == '{'){
 				commentary = true;
 			}
-			if (!commentary) {
+			if (commentary){
+				if (reading[i] == '}'){
+					commentary = false;
+				}
+				i++;
+			}
+			else {
 				/* Símbolos Compostos */
 				/* Comando de Atribuição */
 				if (reading[i] == ':' && reading[i + 1] == '='){
@@ -47,6 +63,19 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					lexToken newTok(counter, word, "Comando_de_Atribuicao");
 					token->push_back(newTok);
 					i += 2;
+				}
+				/* Número real começando só com o ponto*/
+				if (reading[i] == '.' && isNumber(reading[i+1])){
+					tk[0] = '.';
+					int aux;
+					for(aux =1; isNumber(reading[i+aux]); aux++){
+						tk[aux] = reading[i+aux];
+					}
+					tk[aux] = '\0';
+					string word(tk);
+					lexToken newTok(counter, word, "Real");
+					token->push_back(newTok);
+					i +=aux;
 				}
 				/* Operadores Relacionais */
 				else if (reading[i] == '<' && reading[i + 1] == '='){
@@ -71,12 +100,27 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					i += 2;
 				}
 				/* Operadores Aditivos */
-				else if (reading[i] == 'o' && reading[i + 1] == 'r'){
+				else if (reading[i] == 'o' && reading[i + 1] == 'r' && reading[i + 2] != '_' && !isNumber(reading[i + 2] && !isLetter(reading[i + 2]))){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
 					string word(tk);
 					lexToken newTok(counter, word, "Operador_Aditivo");
 					token->push_back(newTok);
 					i += 2;
+				}
+				/*Endif como palavra reservada*/
+				else if (reading[i] == 'e' && reading[i + 1] == 'n' && reading[i + 2] == 'd' && 
+					reading[i+3] == 'i' && reading[i+4] == 'f' && reading[i+5] != '_' && 
+					!isNumber(reading[i+5]) && !isLetter(reading[i+5])){
+					tk[0] = 'e';
+					tk[1] = 'n';
+					tk[2] = 'd';
+					tk[3] = 'i';
+					tk[4] = 'f';
+					tk[5] = '\0';
+					string word(tk);
+					lexToken newTok(counter, word, "Palavra_reservada");
+					token->push_back(newTok);
+					i += 5;
 				}
 				/* Operadores Multiplicativo */
 				else if (reading[i] == 'a' && reading[i + 1] == 'n' && reading[i + 2] == 'd' && reading[i + 3] != '_' && !isNumber(reading[i + 3])
@@ -135,7 +179,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					for (j = 0; j < restricted_word->size(); j++){
 						if (!strcmp(tk, restricted_word->at(j).c_str())){
 							string word(tk);
-							lexToken lex(counter, word, "Palavra_Reservada");
+							lexToken lex(counter, word, "Palavra_reservada");
 							token->push_back(lex);
 							found = true;
 							break;
@@ -155,7 +199,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 						tk[j] = reading[i++];
 					}
 					if (reading[i] == '.'){
-						tk[j] = reading[i];
+						tk[j] = reading[i++];
 						for (j++; isNumber(reading[i]); j++){
 							tk[j] = reading[i++];
 						}
@@ -180,13 +224,10 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					i++;
 				}
 			}
-			else {
-				if (reading[i] == '}'){
-					commentary = false;
-				}
-				i++;
-			}
 		}
+		//Deletando ponteiros de leitura
+		delete[] reading;
+		delete[] tk;
 	}
 	if (commentary){
 		cout << "Esperado } ao fim de um comentario." << endl;
