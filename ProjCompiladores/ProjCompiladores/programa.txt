@@ -3,6 +3,10 @@ var
 	i : integer;
 	j : real;
 	X_I4S_ : real;
+	
+	procedure julio(i: integer; j: real);
+	begin
+	end;
 begin
 	X_I4S_ := 1234567890.0987654321+0.1;
 	while(i < j/2)

@@ -127,8 +127,8 @@ int SyntacticAnalyzer::declaracoes_variaveis(int index){
 
 	
 	tokenLido = getToken(index);
-	index++;
 	if(!tokenLido.compare("var")){
+		index++;
 		index = lista_declaracoes_variaveis(index);
 		return index;
 	}
@@ -269,7 +269,6 @@ int SyntacticAnalyzer::tipo(int index){
 
 int SyntacticAnalyzer::declaracoes_de_subprogramas(int index){
 	string tokenLido, classeLida, linhaLida;
-
 	index = declaracoes_de_subprogramas_auxiliar(index);
 	return index;
 }
@@ -302,7 +301,6 @@ int SyntacticAnalyzer::declaracao_de_subprograma(int index){
 	tokenLido   = getToken(index);
 	classeLida  = getClass(index);
 	index++;
-	
 	if(tokenLido.compare("procedure")){
 		cout <<"ERRO: " << linhaLida << "     Esperado 'procedure' " << endl;
 		exit(1);
@@ -320,6 +318,7 @@ int SyntacticAnalyzer::declaracao_de_subprograma(int index){
 
 	index = argumentos(index);
 	tokenLido = getToken(index);
+	index++;
 	if(tokenLido.compare(";")){
 		cout <<"ERRO: " << linhaLida << "     Esperado ';' " << endl;
 		exit(1);
@@ -359,6 +358,7 @@ int SyntacticAnalyzer::lista_de_parametros(int index){
 	string tokenLido, classeLida, linhaLida;
 	index = lista_de_identificadores(index);
 	tokenLido = getToken(index);
+	index++;
 	if(tokenLido.compare(":")){
 		cout <<"ERRO: " << linhaLida << "     Esperado ':' " << endl;
 		exit(1);
@@ -373,12 +373,13 @@ int SyntacticAnalyzer::lista_de_parametros_auxiliar(int index){
 	linhaLida   = getLinha(index);
 	tokenLido   = getToken(index);
 	classeLida  = getClass(index);
-	index++;
 	
 	if(!tokenLido.compare(";")){
+		index++;
 		index = lista_de_identificadores(index);
 		
 		tokenLido = getToken(index);
+		index++;
 		if(tokenLido.compare(":")){
 			cout <<"ERRO: " << linhaLida << "     Esperado ':' " << endl;
 			exit(1);
@@ -424,6 +425,10 @@ int SyntacticAnalyzer::comandos_opcionais(int index){
 
 	if (classeLida.compare("Identificador") && tokenLido.compare("begin") && tokenLido.compare("if") && tokenLido.compare("while")){
 		/* Significa que é vazio */
+	}
+
+	if(!tokenLido.compare("end")){
+		return index;
 	}
 
 	index = lista_de_comandos(index);
