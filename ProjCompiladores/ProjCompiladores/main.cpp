@@ -3,7 +3,7 @@
 #include <list>
 #include <vector>
 #include "LexicalAnalyzer.h"
-#include "SyntaticAnalyzer.h"
+#include "SyntacticAnalyzer.h"
 
 using namespace std;
 
