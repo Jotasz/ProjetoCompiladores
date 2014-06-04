@@ -51,9 +51,9 @@ int main(int n_arg, char** args){
 	delete code;
 
 	//Análise Semântica
-	SyntaticAnalyzer *sa = new SynteticAnalyzer("programa.lex");
+	SyntacticAnalyzer *sa = new SyntacticAnalyzer("programa.lex");
 	int index = 0;
-	index = programa(index);
+	index = sa->programa(index);
 	cout << "Index final : " << index << endl;
 
 	//Retorno
