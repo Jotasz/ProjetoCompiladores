@@ -57,7 +57,7 @@ int SyntacticAnalyzer::programa(int index){
 	index++;
 	if(tokenLido.compare("program")){
 		cout << "ERRO: " << linhaLida << "    O programa precisa iniciar com a palavra-chave program " << endl;
-		return index;
+		exit(0);
 	}
 	
 	tokenLido  = getToken(index);
@@ -65,20 +65,20 @@ int SyntacticAnalyzer::programa(int index){
 	index++;
 	if(classeLida.compare("Identificador")){
 		cout << "ERRO: "<< linhaLida << "     Depois da palavra-chave program, deve haver um identificador" << endl;
-		return index;
+		exit(0);
 	}
 
 	tokenLido = getToken(index);
 	index++;
 	if(tokenLido.compare(";")){
 		cout << "ERRO: " << linhaLida << "    Faltando o ;" << endl;
-		return index;
+		exit(0);
 	}
 
 	index = declaracoes_variaveis(index);
 	index = declaracoes_de_subprogramas(index);
 	index = comando_composto(index);
-	return index;
+	exit(0);
 	
 }
 
@@ -106,7 +106,7 @@ int SyntacticAnalyzer::lista_declaracoes_variaveis(int index){
 	index++;
 	if(tokenLido.compare(":")){
 		cout <<"ERRO: " << linhaLida << "    Necessario ':' após lista de declaracoes de variaveis" << endl;
-		return index;
+		exit(0);
 	}
 
 	linhaLida   = getLinha(index);
@@ -116,7 +116,7 @@ int SyntacticAnalyzer::lista_declaracoes_variaveis(int index){
 
 	if(classeLida.compare("Inteiro") && classeLida.compare("Real") && classeLida.compare("Booleano")){
 		cout <<"ERRO: " << linhaLida << "   Necessario tipo após lista de variaveis" << endl;
-		return index;
+		exit(0);
 	}
 
 	linhaLida   = getLinha(index);
@@ -125,7 +125,7 @@ int SyntacticAnalyzer::lista_declaracoes_variaveis(int index){
 	index++;
 	if(tokenLido.compare(";")){
 		cout <<"ERRO: " << linhaLida << "     Esperado ';' " << endl;
-		return;
+		exit(0);
 	}
 
 	index = lista_declaracoes_variaveis_auxiliar(index);
@@ -152,7 +152,7 @@ int SyntacticAnalyzer::lista_declaracoes_variaveis_auxiliar(int index){
 			return index;
 		}else {
 			cout <<"ERRO: " << linhaLida << "     Esperado ';' " << endl;
-			return index;
+			exit(0);
 		}
 	}
 }
@@ -167,7 +167,7 @@ int SyntacticAnalyzer::lista_de_identificadores(int index){
 
 	if(classeLida.compare("Identificador")){
 		cout << "ERRO: "<< linhaLida << "     Esperado um identificador" << endl;
-		return index;
+		exit(0);
 	}
 
 	index = lista_de_identificadores_auxiliar(index);
@@ -192,7 +192,7 @@ int SyntacticAnalyzer::lista_de_identificadores_auxiliar(int index){
 			return index;
 		}else{
 			cout << "ERRO: "<< linhaLida << "     Esperado um identificador" << endl;
-			return index;
+			exit(0);
 		}
 	}
 	return index;
@@ -208,7 +208,7 @@ int SyntacticAnalyzer::tipo(int index){
 
 	if(classeLida.compare("Inteiro") && classeLida.compare("Real") && classeLida.compare("Booleano")){
 		cout <<"ERRO: " << linhaLida << "   Type expected" << endl;
-		return index;
+		exit(0);
 	}
 
 	return index;
@@ -235,7 +235,7 @@ int SyntacticAnalyzer::declaracoes_de_subprogramas_auxiliar(int index){
 
 		if(tokenLido.compare(";")){
 			cout <<"ERRO: " << linhaLida << "     Esperado ';' " << endl;
-			return index;
+			exit(0);
 		}
 		index = declaracoes_de_subprogramas_auxiliar(index);
 
@@ -253,7 +253,7 @@ int SyntacticAnalyzer::declaracao_de_subprograma(int index){
 	
 	if(tokenLido.compare("procedure")){
 		cout <<"ERRO: " << linhaLida << "     Esperado 'procedure' " << endl;
-		return index;
+		exit(0);
 	}
 
 	linhaLida   = getLinha(index);
@@ -263,14 +263,14 @@ int SyntacticAnalyzer::declaracao_de_subprograma(int index){
 
 	if(classeLida.compare("Identificador")){
 		cout <<"ERRO: " << linhaLida << "     Esperado identificador " << endl;
-		return index;
+		exit(0);
 	}
 
 	index = argumentos(index);
 	tokenLido = getToken(index);
 	if(tokenLido.compare(";")){
 		cout <<"ERRO: " << linhaLida << "     Esperado ';' " << endl;
-		return index;
+		exit(0);
 	}
 
 	index = declaracoes_variaveis(index);
@@ -295,7 +295,7 @@ int SyntacticAnalyzer::argumentos(int index){
 
 		if(tokenLido.compare(")")){
 			cout <<"ERRO: " << linhaLida << "     Esperado ')' " << endl;
-			return index;
+			exit(0);
 		}
 	}else{
 		return index;
@@ -309,7 +309,7 @@ int SyntacticAnalyzer::lista_de_parametros(int index){
 	tokenLido = getToken(index);
 	if(tokenLido.compare(":")){
 		cout <<"ERRO: " << linhaLida << "     Esperado ':' " << endl;
-		return index;
+		exit(0);
 	}
 	index = tipo(index);
 	index = lista_de_parametros_auxiliar(index);
@@ -329,7 +329,7 @@ int SyntacticAnalyzer::lista_de_parametros_auxiliar(int index){
 		tokenLido = getToken(index);
 		if(tokenLido.compare(":")){
 			cout <<"ERRO: " << linhaLida << "     Esperado ':' " << endl;
-			return index;
+			exit(0);
 		}
 
 		index = tipo(index);
@@ -349,14 +349,14 @@ int SyntacticAnalyzer::comando_composto(int index){
 	index++;
 	if(tokenLido.compare("begin")){
 		cout <<"ERRO: " << linhaLida << "     Esperado 'begin' " << endl;
-		return index;
+		exit(0);
 	}
 	index = comandos_opcionais(index);
 	tokenLido = getToken(index);
 
 	if(tokenLido.compare("begin")){
 		cout <<"ERRO: " << linhaLida << "     Esperado 'end' " << endl;
-		return index;
+		exit(0);
 	}
 	return index;
 }
