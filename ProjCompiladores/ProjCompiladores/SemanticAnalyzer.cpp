@@ -425,10 +425,7 @@ int SyntacticAnalyzer::comandos_opcionais(int index){
 
 	if (classeLida.compare("Identificador") && tokenLido.compare("begin") && tokenLido.compare("if") && tokenLido.compare("while")){
 		/* Significa que é vazio */
-	}
-
-	if(!tokenLido.compare("end")){
-		return index;
+        return index;
 	}
 
 	index = lista_de_comandos(index);
